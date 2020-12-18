@@ -1,0 +1,10 @@
+{
+  "name": "my-realworld",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "SedationH <sedationh@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "nuxt": "^2.14.12"
+  }
+}
