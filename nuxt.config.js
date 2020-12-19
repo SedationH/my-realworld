@@ -1,5 +1,6 @@
 // nuxt配置文件
 export default {
+  components: true,
   router: {
     linkActiveClass: 'active',
     extendRoutes(routes, resolve) {

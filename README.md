@@ -98,9 +98,8 @@ routes: [
 
 [路由配置参考](https://nuxtjs.org/docs/2.x/features/file-system-routing) 注意文件和文件夹名不能有 `-` 必须和非必须的路径 注意区分配置情况
 
-特殊路由处理
-
 ```js
+// 特殊路由处理
 router: {
   extendRoutes(routes, resolve) {
     routes.push({
@@ -110,5 +109,46 @@ router: {
     })
   },
 },
+ 
+// link 高亮处理
+linkActiveClass: 'active',
 ```
 
+## 基本登录 && 持久化
+
+拿到input内容 -> api请求调用 -> 通过cookie持久存储
+
+东西是放在vuex中的 这样全局都可以用到这个数据并且自动响应化了
+
+nuxt有个api很有意思
+
+```js
+actions: {
+  // If the action nuxtServerInit is defined in the store
+  // and the mode is universal,
+  // Nuxt.js will call it with the context
+  // (only from the server-side).
+  // It's useful when we have some data on the
+  // server we want to give directly to the client-side.
+  nuxtServerInit({ commit }, { req }) {
+    let user = null
+    if (req.headers.cookie) {
+      const parsed = cookieParser.parse(
+        req.headers.cookie
+      )
+      try {
+        user = JSON.parse(parsed.user)
+      } catch (err) {
+        // No valid cookie found
+      }
+    }
+    commit('setUser', user)
+  },
+},
+```
+
+就是这样来实现同构渲染
+
+
+
+axios可以提前封装一下 抽象为不同的api进行使用

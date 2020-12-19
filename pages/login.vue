@@ -13,9 +13,7 @@
             >
           </p>
 
-          <ul class="error-messages">
-            <li>That email is already taken</li>
-          </ul>
+          <ErrorMessage :errors="errors" />
 
           <form>
             <fieldset v-if="!isLogin" class="form-group">
@@ -44,6 +42,7 @@
             </fieldset>
             <button
               class="btn btn-lg btn-primary pull-xs-right"
+              :disabled="disable"
               @click.prevent="handleBtn"
             >
               {{ isLogin ? 'Sign in' : 'Sign up' }}
@@ -56,18 +55,21 @@
 </template>
 
 <script>
-import { login } from '~/api/user'
+import { login, register } from '~/api/user'
 const Cookie = process.client
   ? require('js-cookie')
   : undefined
 
 export default {
+  middleware: 'notAuth',
   data: () => ({
     user: {
       username: '',
       email: 'sedationh@gmail.com',
       password: '12345678',
     },
+    disable: false,
+    errors: {},
   }),
   computed: {
     isLogin() {
@@ -76,16 +78,22 @@ export default {
   },
   methods: {
     async handleBtn() {
+      // TODO: 校验
+      this.disable = true
       try {
         const { user } = this
-        const { data } = await login({ user })
+        const { data } = this.isLogin
+          ? await login({ user })
+          : await register({ user })
         // 在vuex中全局保存用户信息
         this.$store.commit('setUser', data.user)
         // 持久化
         Cookie.set('user', data.user)
         this.$router.push('/')
-      } catch (error) {
-        console.log(error)
+      } catch (e) {
+        console.dir(e)
+        this.errors = e.response.data.errors
+        this.disable = false
       }
     },
   },

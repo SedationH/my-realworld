@@ -106,3 +106,8 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  middleware: 'needAuth',
+}
+</script>
