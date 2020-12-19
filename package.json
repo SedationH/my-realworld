@@ -5,6 +5,7 @@
   "author": "SedationH <sedationh@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.21.0",
     "nuxt": "^2.14.12"
   }
 }
