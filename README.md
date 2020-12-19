@@ -96,7 +96,7 @@ routes: [
 ],
 ```
 
-[路由配置参考](https://nuxtjs.org/docs/2.x/features/file-system-routing) 注意文件和文件夹名不能有 `-`
+[路由配置参考](https://nuxtjs.org/docs/2.x/features/file-system-routing) 注意文件和文件夹名不能有 `-` 必须和非必须的路径 注意区分配置情况
 
 特殊路由处理
 

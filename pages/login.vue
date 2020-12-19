@@ -56,8 +56,10 @@
 </template>
 
 <script>
-// import { login } from '~/api/user'
 import { login } from '~/api/user'
+const Cookie = process.client
+  ? require('js-cookie')
+  : undefined
 
 export default {
   data: () => ({
@@ -79,6 +81,9 @@ export default {
         const { data } = await login({ user })
         // 在vuex中全局保存用户信息
         this.$store.commit('setUser', data.user)
+        // 持久化
+        Cookie.set('user', data.user)
+        this.$router.push('/')
       } catch (error) {
         console.log(error)
       }
