@@ -12,21 +12,49 @@
         <div class="col-md-9">
           <div class="feed-toggle">
             <ul class="nav nav-pills outline-active">
-              <li class="nav-item">
-                <a class="nav-link disabled" href=""
-                  >Your Feed</a
+              <li v-if="user" class="nav-item">
+                <nuxt-link
+                  class="nav-link"
+                  :class="{ active: tab === 'YF' }"
+                  :to="{
+                    name: 'index',
+                    query: {
+                      page,
+                      tag,
+                      tab: 'YF',
+                    },
+                  }"
+                  exact
                 >
+                  Your Feed
+                </nuxt-link>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href=""
-                  >Global Feed</a
+                <nuxt-link
+                  class="nav-link"
+                  :class="{ active: tab === 'GF' }"
+                  :to="{
+                    name: 'index',
+                    query: {
+                      page,
+                      tag,
+                      tab: 'GF',
+                    },
+                  }"
+                  exact
                 >
+                  Global Feed
+                </nuxt-link>
               </li>
             </ul>
           </div>
 
           <ArticlePreview :articles="articles" />
-          <Pagination :totalPage="totalPage" :page="page" />
+          <Pagination
+            :totalPage="totalPage"
+            :page="page"
+            :tag="tag"
+          />
         </div>
 
         <div class="col-md-3">
@@ -34,30 +62,20 @@
             <p>Popular Tags</p>
 
             <div class="tag-list">
-              <a href="" class="tag-pill tag-default"
-                >programming</a
+              <nuxt-link
+                class="tag-pill tag-default"
+                v-for="(item, index) in tags"
+                :key="index"
+                :to="{
+                  name: 'index',
+                  query: {
+                    page,
+                    tag: item,
+                  },
+                }"
               >
-              <a href="" class="tag-pill tag-default"
-                >javascript</a
-              >
-              <a href="" class="tag-pill tag-default"
-                >emberjs</a
-              >
-              <a href="" class="tag-pill tag-default"
-                >angularjs</a
-              >
-              <a href="" class="tag-pill tag-default"
-                >react</a
-              >
-              <a href="" class="tag-pill tag-default"
-                >mean</a
-              >
-              <a href="" class="tag-pill tag-default"
-                >node</a
-              >
-              <a href="" class="tag-pill tag-default"
-                >rails</a
-              >
+                {{ item }}
+              </nuxt-link>
             </div>
           </div>
         </div>
@@ -67,25 +85,42 @@
 </template>
 
 <script>
-import { getArticles } from '~/api/article'
-
+import { getArticles, getFeedArticles } from '~/api/article'
+import { getTags } from '~/api/tags'
+import { mapState } from 'vuex'
 export default {
   async asyncData({ query }) {
     const page = parseInt(query.page) || 1,
       limit = 10,
-      offset = (page - 1) * limit
-    const [articlesRes] = await Promise.all([
-      getArticles({
+      offset = (page - 1) * limit,
+      tag = query.tag,
+      tab = query.tab || 'GF',
+      loadArticles =
+        tab === 'YF' ? getFeedArticles : getArticles
+
+    const [
+      {
+        data: { articles, articlesCount },
+      },
+      {
+        data: { tags },
+      },
+    ] = await Promise.all([
+      loadArticles({
         limit,
         offset,
+        tag,
       }),
+      getTags(),
     ])
-    const { articles, articlesCount } = articlesRes.data
     return {
       articles,
       articlesCount,
       limit,
       page,
+      tags,
+      tag,
+      tab,
     }
   },
   head() {
@@ -93,8 +128,9 @@ export default {
       title: '首页',
     }
   },
-  watchQuery: ['page'],
+  watchQuery: ['page', 'tag', 'tab'],
   computed: {
+    ...mapState(['user']),
     totalPage() {
       return Math.ceil(this.articlesCount / this.limit)
     },

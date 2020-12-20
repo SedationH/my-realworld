@@ -1,4 +1,4 @@
-import { request } from '~/utils/index'
+import { request } from '~/plugins/request'
 
 /**
  * 登录
@@ -25,4 +25,3 @@ export const register = data =>
     url: '/api/users',
     data,
   })
-

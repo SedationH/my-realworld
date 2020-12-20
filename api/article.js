@@ -1,4 +1,4 @@
-import { request } from '~/utils/index'
+import { request } from '~/plugins/request'
 
 export const getArticles = params =>
   request({
@@ -7,4 +7,10 @@ export const getArticles = params =>
     params,
   })
 
-
+export const getFeedArticles = params =>
+  request({
+    method: 'GET',
+    url: '/api/articles/feed',
+    params,
+    needToken: true,
+  })

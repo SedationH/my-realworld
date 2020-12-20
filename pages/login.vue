@@ -58,9 +58,6 @@
 
 <script>
 import { login, register } from '~/api/user'
-const Cookie = process.client
-  ? require('js-cookie')
-  : undefined
 
 export default {
   middleware: 'notAuth',
@@ -80,6 +77,12 @@ export default {
   },
   methods: {
     async handleBtn() {
+      // 没必要判断 这个方法只会在client上执行
+      // const Cookie = process.client
+      //   ? await import('js-cookie')
+      //   : undefined
+      const Cookie = await import('js-cookie')
+
       // TODO: 校验
       this.disable = true
       try {

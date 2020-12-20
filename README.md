@@ -152,3 +152,46 @@ actions: {
 
 
 axios可以提前封装一下 抽象为不同的api进行使用
+
+
+
+## component
+
+Starting from `v2.13`, Nuxt can auto import your components when used in your templates, to activate this feature, set `components: true` in your configuration:
+
+nuxt.config.js
+
+```js
+export default {
+  components: true
+}
+```
+
+Once you create your components in the components directory they will then be available to be auto imported.
+
+```bash
+components/
+  TheHeader.vue
+  TheFooter.vue
+```
+
+layouts/default.vue
+
+```html
+<template>
+  <div>
+    <TheHeader />
+    <Nuxt />
+    <TheFooter />
+  </div>
+</template>
+```
+
+
+
+## middleware
+
+The `middleware` directory contains your application middleware. Middleware lets you define custom functions that can be run before rendering either a page or a group of pages (layout).
+
+middle could config in pages to make specific middleware function wrok, also could config with route to invoke sepcifc function when router is affective, about refer [router middleware](https://nuxtjs.org/examples/middleware-router)
+

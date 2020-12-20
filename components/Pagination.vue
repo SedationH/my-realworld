@@ -2,9 +2,12 @@
   <div>
     <ul class="pagination">
       <li
-        class="page-item active"
+        class="page-item"
         v-for="item in totalPage"
         :key="item"
+        :class="{
+          active: page === item,
+        }"
       >
         <nuxt-link
           class="page-link "
@@ -12,6 +15,7 @@
             name: 'index',
             query: {
               page: item,
+              tag,
             },
           }"
         >
@@ -33,6 +37,7 @@ export default {
       type: Number,
       require: true,
     },
+    tag: String,
   },
 }
 </script>
