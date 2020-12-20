@@ -25,29 +25,8 @@
             </ul>
           </div>
 
-          <template>
-            <div class="article-preview">
-              <div class="article-meta">
-                <a href="profile.html"
-                  ><img src="http://i.imgur.com/Qr71crq.jpg"
-                /></a>
-                <div class="info">
-                  <a href="" class="author">Eric Simons</a>
-                  <span class="date">January 20th</span>
-                </div>
-                <button
-                  class="btn btn-outline-primary btn-sm pull-xs-right"
-                >
-                  <i class="ion-heart"></i> 29
-                </button>
-              </div>
-              <a href="" class="preview-link">
-                <h1>How to build webapps that scale</h1>
-                <p>This is the description for the post.</p>
-                <span>Read more...</span>
-              </a>
-            </div>
-          </template>
+          <ArticlePreview :articles="articles" />
+          <Pagination :totalPage="totalPage" :page="page" />
         </div>
 
         <div class="col-md-3">
@@ -88,5 +67,37 @@
 </template>
 
 <script>
-export default {}
+import { getArticles } from '~/api/article'
+
+export default {
+  async asyncData({ query }) {
+    const page = parseInt(query.page) || 1,
+      limit = 10,
+      offset = (page - 1) * limit
+    const [articlesRes] = await Promise.all([
+      getArticles({
+        limit,
+        offset,
+      }),
+    ])
+    const { articles, articlesCount } = articlesRes.data
+    return {
+      articles,
+      articlesCount,
+      limit,
+      page,
+    }
+  },
+  head() {
+    return {
+      title: '首页',
+    }
+  },
+  watchQuery: ['page'],
+  computed: {
+    totalPage() {
+      return Math.ceil(this.articlesCount / this.limit)
+    },
+  },
+}
 </script>
