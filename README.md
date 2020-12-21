@@ -188,3 +188,68 @@ The `middleware` directory contains your application middleware. Middleware lets
 
 middle could config in pages to make specific middleware function wrok, also could config with route to invoke sepcifc function when router is affective, about refer [router middleware](https://nuxtjs.org/examples/middleware-router)
 
+
+
+## 围绕route为核心的nuxt-link
+
+这个在index页面中尤为突出 
+
+asyncData中 `  async asyncData({ query }) {` 拿到请求内容
+
+⚠️配置 
+
+```js
+<nuxt-link
+  v-if="tag"
+  class="nav-link"
+  :class="{ active: tag }"
+  :to="{
+    name: 'index',
+    query: {
+      tag,
+      tab: 'TF',
+      page: 1,
+    },
+  }"
+  exact
+>
+
+// 要能感知到query的变化
+watchQuery: ['page', 'tag', 'tab']
+```
+
+
+
+## 响应化处理
+
+理解响应化 -> 高效利用框架
+
+```js
+async handleFavoriteBtnClick(article) {
+  // 临时整活 ❤️了❤️了
+  // 没想到能这么写 响应化处理
+  this.$set(article, 'disabled', true)
+  try {
+    await favorite(article.slug, article.favorited)
+    article.favorited = !article.favorited
+    article.favorited
+      ? (article.favoritesCount += 1)
+      : (article.favoritesCount -= 1)
+    article.disabled = false
+  } catch (e) {
+    article.disabled = false
+  }
+},
+```
+
+
+
+## 框架中实践果然是学习最快的
+
+Vue.set
+
+Vue.filter
+
+组件的复用与规划
+
+一些指令

@@ -37,6 +37,45 @@ export const getSingleArticle = slug =>
   })
 
 /**
+ * 删除文章
+ * @param slug 文章唯一标识
+ * @returns {*}
+ */
+export const deleteArticle = slug =>
+  request({
+    method: 'DELETE',
+    url: `/api/articles/${slug}`,
+    needToken: true,
+  })
+
+/**
+ * 发布文章
+ * @param data
+ * @returns {*}
+ */
+export const createArticle = data =>
+  request({
+    method: 'POST',
+    url: `/api/articles/`,
+    data,
+    needToken: true,
+  })
+
+/**
+ * 修改文章
+ * @param slug 文章唯一标识
+ * @param data
+ * @returns {*}
+ */
+export const updateArticle = (slug, data) =>
+  request({
+    method: 'PUT',
+    url: `/api/articles/${slug}`,
+    data,
+    needToken: true,
+  })
+
+/**
  * 点赞操作
  * @param slug 文章唯一标识
  * @param favorited 当前点赞状态

@@ -34,8 +34,9 @@ Instead of having the Bootstrap theme included locally, we recommend loading the
 
 Alternatively, if you want to make modifications to the theme, check out the [theme's repo](https://github.com/gothinkster/conduit-bootstrap-template).
 
-
 # Templates
+
+页面不在模版的时候，从dom树中copy
 
 - [Layout](#layout)
   - [Header](#header)
