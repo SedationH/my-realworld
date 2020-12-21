@@ -11,5 +11,5 @@ export default {
       })
     },
   },
-  plugins: ['~/plugins/request.js', '~/plugins/day.js'],
+  plugins: ['~/plugins/request.js', '~/plugins/vue-tools.js'],
 }

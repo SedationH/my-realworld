@@ -33,10 +33,9 @@ layouts 中进行布局设置
   - List of articles populated from author's created articles or author's favorited articles
 
 ```zsh
-$ tree pages 
 pages
 ├── article
-│   └── _article
+│   └── _slug
 │       └── index.vue
 ├── editor
 │   └── _article.vue
@@ -52,48 +51,42 @@ pages
 对于路由生成文件参考[router](.nuxt/router.js) 好吧 忽略上传了 本地可见 这里列一下
 
 ```js
-routes: [
-  {
-    path: '/login',
-    component: _6b477114,
-    name: 'login',
-  },
-  {
-    path: '/settings',
-    component: _72b4ecc8,
-    name: 'settings',
-  },
-  {
-    path: '/article/:article',
-    component: _0502d6d0,
-    name: 'article-article',
-  },
-  {
-    path: '/editor/:article?',
-    component: _0f9a8c04,
-    name: 'editor-article',
-  },
-  {
-    path: '/profile/:username',
-    component: _79a4a67d,
-    name: 'profile-username',
-  },
-  {
-    path: '/profile/:username?/favorites',
-    component: _0f9747fc,
-    name: 'profile-username-favorites',
-  },
-  {
-    path: '/',
-    component: _bcc06406,
-    name: 'index',
-  },
-  {
-    path: '/register',
-    component: _016b5c7c,
-    name: 'register',
-  },
-],
+routes: [{
+  path: "/login",
+  component: _6b477114,
+  name: "login"
+}, {
+  path: "/settings",
+  component: _72b4ecc8,
+  name: "settings"
+}, {
+  path: "/article/:slug",
+  component: _555f715f,
+  name: "article-slug"
+}, {
+  path: "/editor/:article?",
+  component: _0f9a8c04,
+  name: "editor-article"
+}, {
+  path: "/profile/:username",
+  component: _79a4a67d,
+  name: "profile-username"
+}, {
+  path: "/profile/:username?/favorites",
+  component: _0f9747fc,
+  name: "profile-username-favorites"
+}, {
+  path: "/",
+  component: _bcc06406,
+  name: "index"
+}, {
+  path: "/register",
+  component: _016b5c7c,
+  name: "register"
+}],
+
+fallback: false
+}
 ```
 
 [路由配置参考](https://nuxtjs.org/docs/2.x/features/file-system-routing) 注意文件和文件夹名不能有 `-` 必须和非必须的路径 注意区分配置情况

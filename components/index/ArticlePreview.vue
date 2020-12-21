@@ -21,7 +21,7 @@
             :to="{
               name: 'profile-username',
               params: {
-                username: article.author.use,
+                username: article.author.username,
               },
             }"
           >
@@ -33,8 +33,12 @@
         </div>
         <button
           class="btn btn-outline-primary btn-sm pull-xs-right"
+          @click="handleFavoriteBtnClick(article)"
+          :disabled="article.disabled"
+          :class="{ active: article.favorited }"
         >
-          <i class="ion-heart"></i> 29
+          <i class="ion-heart"></i>
+          {{ article.favoritesCount }}
         </button>
       </div>
       <nuxt-link
@@ -55,11 +59,29 @@
 </template>
 
 <script>
+import { favorite } from '~/api/article'
 export default {
   props: {
     articles: {
       type: Array,
       required: true,
+    },
+  },
+  methods: {
+    async handleFavoriteBtnClick(article) {
+      // 临时整活 ❤️了❤️了
+      // 没想到能这么写 响应化处理
+      this.$set(article, 'disabled', true)
+      try {
+        await favorite(article.slug, article.favorited)
+        article.favorited = !article.favorited
+        article.favorited
+          ? (article.favoritesCount += 1)
+          : (article.favoritesCount -= 1)
+        article.disabled = false
+      } catch (e) {
+        article.disabled = false
+      }
     },
   },
 }

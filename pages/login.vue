@@ -81,11 +81,11 @@ export default {
       // const Cookie = process.client
       //   ? await import('js-cookie')
       //   : undefined
-      const Cookie = await import('js-cookie')
 
       // TODO: 校验
       this.disable = true
       try {
+        const Cookie = await import('js-cookie')
         const { user } = this
         const { data } = this.isLogin
           ? await login({ user })
@@ -96,7 +96,6 @@ export default {
         Cookie.set('user', data.user)
         this.$router.push('/')
       } catch (e) {
-        console.dir(e)
         this.errors = e.response.data.errors
         this.disable = false
       }
