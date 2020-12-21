@@ -10,74 +10,24 @@
     <div class="container page">
       <div class="row">
         <div class="col-md-9">
-          <div class="feed-toggle">
-            <ul class="nav nav-pills outline-active">
-              <li v-if="user" class="nav-item">
-                <nuxt-link
-                  class="nav-link"
-                  :class="{ active: tab === 'YF' }"
-                  :to="{
-                    name: 'index',
-                    query: {
-                      page,
-                      tag,
-                      tab: 'YF',
-                    },
-                  }"
-                  exact
-                >
-                  Your Feed
-                </nuxt-link>
-              </li>
-              <li class="nav-item">
-                <nuxt-link
-                  class="nav-link"
-                  :class="{ active: tab === 'GF' }"
-                  :to="{
-                    name: 'index',
-                    query: {
-                      page,
-                      tag,
-                      tab: 'GF',
-                    },
-                  }"
-                  exact
-                >
-                  Global Feed
-                </nuxt-link>
-              </li>
-            </ul>
-          </div>
+          <FeedToggle
+            :page="page"
+            :tag="tag"
+            :tab="tab"
+            :user="user"
+          />
 
           <ArticlePreview :articles="articles" />
           <Pagination
             :totalPage="totalPage"
             :page="page"
             :tag="tag"
+            :tab="tab"
           />
         </div>
 
         <div class="col-md-3">
-          <div class="sidebar">
-            <p>Popular Tags</p>
-
-            <div class="tag-list">
-              <nuxt-link
-                class="tag-pill tag-default"
-                v-for="(item, index) in tags"
-                :key="index"
-                :to="{
-                  name: 'index',
-                  query: {
-                    page,
-                    tag: item,
-                  },
-                }"
-              >
-                {{ item }}
-              </nuxt-link>
-            </div>
-          </div>
+          <Tags :tags="tags" />
         </div>
       </div>
     </div>
@@ -89,6 +39,10 @@ import { getArticles, getFeedArticles } from '~/api/article'
 import { getTags } from '~/api/tags'
 import { mapState } from 'vuex'
 export default {
+  // tab:
+  //   YF -> Your Feed;
+  //   GF -> Global Feed
+  //   TF -> Tag Feed
   async asyncData({ query }) {
     const page = parseInt(query.page) || 1,
       limit = 10,

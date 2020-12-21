@@ -16,6 +16,7 @@
             query: {
               page: item,
               tag,
+              tab,
             },
           }"
         >
@@ -38,6 +39,7 @@ export default {
       require: true,
     },
     tag: String,
+    tab: String,
   },
 }
 </script>
