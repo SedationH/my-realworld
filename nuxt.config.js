@@ -2,6 +2,7 @@
 export default {
   components: true,
   router: {
+    base: '/my-realworld/',
     linkActiveClass: 'active',
     extendRoutes(routes, resolve) {
       routes.push(
@@ -25,4 +26,5 @@ export default {
     '~/plugins/request.js',
     '~/plugins/vue-tools.js',
   ],
+  target: 'static',
 }

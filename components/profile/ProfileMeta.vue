@@ -31,11 +31,9 @@ export default {
   props: ['profile', 'isAuthor', 'disabled'],
   methods: {
     handleEditBtnClick() {
-      console.log(1)
       this.$router.push({
         name: 'settings',
       })
-      console.log(2)
     },
   },
 }

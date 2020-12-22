@@ -11,5 +11,14 @@
     "js-cookie": "^2.2.1",
     "markdown-it": "^12.0.4",
     "nuxt": "^2.14.12"
+  },
+  "devDependencies": {
+    "push-dir": "^0.4.1"
+  },
+  "scripts": {
+    "dev": "nuxt",
+    "generate": "nuxt generate",
+    "start": "nuxt start",
+    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
   }
 }
