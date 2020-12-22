@@ -3,7 +3,7 @@
     <nav class="navbar navbar-light">
       <div class="container">
         <nuxt-link class="navbar-brand" to="/">
-          conduit
+          conduit by SedationH
         </nuxt-link>
         <ul class="nav navbar-nav pull-xs-right">
           <li class="nav-item">

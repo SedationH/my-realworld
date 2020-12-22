@@ -18,6 +18,8 @@ If the backend is about to run on a different host/port than the frontend, make 
 
 `Authorization: Token jwt.token.here`
 
+127.0.0.1
+
 ## JSON Objects returned by API:
 
 Make sure the right content type like `Content-Type: application/json; charset=utf-8` is correctly returned.
