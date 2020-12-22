@@ -12,3 +12,13 @@ export const follow = (username, following) =>
     url: `/api/profiles/${username}/follow`,
     needToken: true,
   })
+
+/**
+ * 获得当前用户信息
+ * @param username 用户名
+ */
+export const getProfile = username =>
+  request({
+    method: 'GET',
+    url: `/api/profiles/${username}`,
+  })
